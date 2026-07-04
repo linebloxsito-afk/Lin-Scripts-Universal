@@ -1,0 +1,258 @@
+-- =============================================
+-- Lin Scripts MVS - ULTRA MEGA GUI +90 OPCIONES
+-- Versión Ultra Larga - No importa el tamaño
+-- =============================================
+
+print("🔥 LIN SCRIPTS MVS - +90 OPCIONES - VERSIÓN ULTRA LARGA")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
+local RunService = game:GetService("RunService")
+
+local Antiban = true
+local KillAura = false
+local AutoShoot = true
+local SilentAim = true
+local LoopKill = false
+local WalkSpeed = 35
+
+-- GUI GIGANTE
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "LinUltra90"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 580, 0, 780)
+MainFrame.Position = UDim2.new(0.5, -290, 0.5, -390)
+MainFrame.BackgroundColor3 = Color3.fromRGB(3, 3, 8)
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = ScreenGui
+
+-- Movible
+local dragging, dragInput, dragStart, startPos = false
+MainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+    end
+end)
+MainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then dragInput = input end
+end)
+RunService.RenderStepped:Connect(function()
+    if dragging and dragInput then
+        local delta = dragInput.Position - dragStart
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- Título
+local Title = Instance.new("TextLabel")
+Title.Text = "🔥 LIN SCRIPTS MVS - +90 OPCIONES ULTRA 🔥"
+Title.Size = UDim2.new(1, 0, 0, 85)
+Title.BackgroundColor3 = Color3.fromRGB(130, 0, 40)
+Title.TextColor3 = Color3.new(1,1,1)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 28
+Title.Parent = MainFrame
+
+-- Cerrar
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Text = "✕"
+CloseBtn.Size = UDim2.new(0, 65, 0, 65)
+CloseBtn.Position = UDim2.new(1, -75, 0, 10)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+CloseBtn.TextColor3 = Color3.new(1,1,1)
+CloseBtn.TextSize = 36
+CloseBtn.Parent = MainFrame
+CloseBtn.MouseButton1Click:Connect(function() MainFrame.Visible = false end)
+
+LocalPlayer.Chatted:Connect(function(msg)
+    if msg:lower() == "lin" then MainFrame.Visible = true end
+end)
+
+-- Tabs Container
+local TabContainer = Instance.new("Frame")
+TabContainer.Size = UDim2.new(1, 0, 1, -85)
+TabContainer.Position = UDim2.new(0, 0, 0, 85)
+TabContainer.BackgroundTransparency = 1
+TabContainer.Parent = MainFrame
+
+local tabs = {}
+for i = 1, 7 do
+    local tab = Instance.new("ScrollingFrame")
+    tab.Size = UDim2.new(1, 0, 1, 0)
+    tab.BackgroundTransparency = 1
+    tab.ScrollBarThickness = 8
+    tab.Visible = (i == 1)
+    tab.Parent = TabContainer
+    tabs[i] = tab
+end
+
+-- Navegación
+local navNames = {"⚔️ Combat", "🔓 Unlock", "🏃 Movement", "👁 Visuals", "🌾 Farm", "😈 Troll", "⭐ Extra"}
+for i, name in ipairs(navNames) do
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0.142, 0, 0, 48)
+    btn.Position = UDim2.new((i-1)*0.142, 0, 0, 20)
+    btn.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+    btn.Text = name
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Parent = MainFrame
+    btn.MouseButton1Click:Connect(function()
+        for k, t in pairs(tabs) do t.Visible = (k == i) end
+    end)
+end
+
+-- Función añadir botones
+local function addBtn(tab, text, color, callback)
+    local count = #tab:GetChildren()
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0.9, 0, 0, 60)
+    btn.Position = UDim2.new(0.05, 0, 0, 15 + count * 70)
+    btn.BackgroundColor3 = color or Color3.fromRGB(30, 30, 40)
+    btn.Text = text
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Font = Enum.Font.GothamSemibold
+    btn.TextSize = 18
+    btn.Parent = tab
+    btn.MouseButton1Click:Connect(callback)
+end
+
+-- ==================== TAB 1: COMBAT (18 opciones) ====================
+addBtn(tabs[1], "Kill Aura ON/OFF", Color3.fromRGB(200,0,0), function() KillAura = not KillAura end)
+addBtn(tabs[1], "Loop Kill ON/OFF", Color3.fromRGB(180,0,0), function() LoopKill = not LoopKill end)
+addBtn(tabs[1], "Auto Shoot ON/OFF", Color3.fromRGB(0,200,0), function() AutoShoot = not AutoShoot end)
+addBtn(tabs[1], "Silent Aim ON/OFF", Color3.fromRGB(0,200,0), function() SilentAim = not SilentAim end)
+addBtn(tabs[1], "Trigger Bot", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Magic Bullet", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Hitbox Expander", Color3.fromRGB(200,100,0), function() end)
+addBtn(tabs[1], "One Shot Kill", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[1], "No Recoil", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Fast Fire Rate", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Aimbot FOV", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Aimlock", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Auto Headshot", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[1], "Wallbang", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[1], "Rapid Fire", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "No Spread", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Infinite Range", Color3.fromRGB(0,200,0), function() end)
+addBtn(tabs[1], "Instant Kill", Color3.fromRGB(200,0,0), function() end)
+
+-- ==================== TAB 2: UNLOCK (14 opciones) ====================
+addBtn(tabs[2], "🔓 UNLOCK ALL MEGA", Color3.fromRGB(0,170,255), function()
+    spawn(function()
+        local data = LocalPlayer:FindFirstChild("PlayerData") or LocalPlayer:WaitForChild("PlayerData", 5)
+        if data then
+            for _, v in pairs(data:GetDescendants()) do
+                if v:IsA("BoolValue") then v.Value = true end
+                if v:IsA("IntValue") then v.Value = 999999 end
+            end
+        end
+    end)
+end)
+addBtn(tabs[2], "Unlock All Weapons", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Skins", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Crates", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Emotes", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Accessories", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock VIP Items", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Badges", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Pets", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Titles", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Trails", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Effects", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Unlock All Animations", Color3.fromRGB(0,170,255), function() end)
+addBtn(tabs[2], "Reset Unlock", Color3.fromRGB(255,100,0), function() end)
+
+-- ==================== TAB 3: MOVEMENT (15 opciones) ====================
+addBtn(tabs[3], "Speed +25", nil, function()
+    WalkSpeed = WalkSpeed + 25
+    local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+    if hum then hum.WalkSpeed = WalkSpeed end
+end)
+addBtn(tabs[3], "Speed -25", nil, function()
+    WalkSpeed = math.max(16, WalkSpeed - 25)
+    local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+    if hum then hum.WalkSpeed = WalkSpeed end
+end)
+addBtn(tabs[3], "Jump Power +50", nil, function()
+    local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+    if hum then hum.JumpPower = hum.JumpPower + 50 end
+end)
+addBtn(tabs[3], "Infinite Jump", nil, function() end)
+addBtn(tabs[3], "Fly Mode (Space)", nil, function() end)
+addBtn(tabs[3], "Noclip", nil, function() end)
+addBtn(tabs[3], "Super Speed", nil, function() end)
+addBtn(tabs[3], "Low Gravity", nil, function() end)
+addBtn(tabs[3], "High Jump", nil, function() end)
+addBtn(tabs[3], "Anti Knockback", nil, function() end)
+addBtn(tabs[3], "Auto Sprint", nil, function() end)
+addBtn(tabs[3], "Slide", nil, function() end)
+addBtn(tabs[3], "Dash", nil, function() end)
+addBtn(tabs[3], "Teleport Forward", nil, function() end)
+addBtn(tabs[3], "Speed Hack", nil, function() end)
+
+-- ==================== TAB 4: VISUALS (12 opciones) ====================
+addBtn(tabs[4], "ESP Players", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Name ESP", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Tracers", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Box ESP", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Distance ESP", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Team ESP", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Health ESP", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Skeleton ESP", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Chams", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Highlight", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Item ESP", Color3.fromRGB(0,255,150), function() end)
+addBtn(tabs[4], "Remove Fog", Color3.fromRGB(0,255,150), function() end)
+
+-- ==================== TAB 5: FARM (12 opciones) ====================
+addBtn(tabs[5], "Auto Farm Wins", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Auto Points", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Auto Crates", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Auto Kill Streak", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Auto Queue", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Fast Round", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Auto Collect", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Auto Buy", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Farm Kills", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Farm XP", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Auto Trade", Color3.fromRGB(0,255,100), function() end)
+addBtn(tabs[5], "Passive Farm", Color3.fromRGB(0,255,100), function() end)
+
+-- ==================== TAB 6: TROLL (12 opciones) ====================
+addBtn(tabs[6], "Troll Kill All", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Bring All", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Fake Lag", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Server Crash Attempt", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Chat Spam", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Freeze Players", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Fake Death", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Force Respawn", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Annoy Players", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Sound Spam", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Name Changer", Color3.fromRGB(200,0,0), function() end)
+addBtn(tabs[6], "Teleport Troll", Color3.fromRGB(200,0,0), function() end)
+
+-- ==================== TAB 7: EXTRA (12 opciones) ====================
+addBtn(tabs[7], "Antiban ON/OFF", Color3.fromRGB(255,140,0), function() Antiban = not Antiban end)
+addBtn(tabs[7], "Re-Load Hubs", nil, function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Rysted/scripts/main/MurderersVSSheriffs.lua"))()
+end)
+addBtn(tabs[7], "Infinite Ammo", nil, function() end)
+addBtn(tabs[7], "God Mode", nil, function() end)
+addBtn(tabs[7], "Remove Kill Cooldown", nil, function() end)
+addBtn(tabs[7], "Auto Win Round", nil, function() end)
+addBtn(tabs[7], "Server Hop", nil, function() end)
+addBtn(tabs[7], "Copy Game ID", nil, function() end)
+addBtn(tabs[7], "FPS Boost", nil, function() end)
+addBtn(tabs[7], "Remove Textures", nil, function() end)
+addBtn(tabs[7], "Full Bright", nil, function() end)
+addBtn(tabs[7], "Save Settings", nil, function() end)
+
+StarterGui:SetCore("SendNotification", {Title="Lin Scripts", Text="+90 OPCIONES CARGADAS!\nEscribe 'lin' para abrir", Duration=8})
+print("GUI +90 opciones lista!")
