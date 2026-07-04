@@ -1,0 +1,152 @@
+-- =============================================
+-- Lin Scripts MVS - GUI PEQUEÑA + MOVIBLE
+-- =============================================
+
+print("🔥 Lin Scripts MVS - GUI Pequeña cargada")
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local StarterGui = game:GetService("StarterGui")
+local RunService = game:GetService("RunService")
+
+local Antiban = true
+local KillAura = false
+local AutoShoot = true
+local SilentAim = true
+local WalkSpeed = 24
+
+-- GUI PEQUEÑA
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "LinSmallGUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 260, 0, 420)  -- Mucho más pequeña
+Frame.Position = UDim2.new(0.5, -130, 0.5, -210)
+Frame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+
+-- Hacerla movible
+local dragging = false
+local dragInput
+local dragStart
+local startPos
+
+Frame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = Frame.Position
+    end
+end)
+
+Frame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if dragging and dragInput then
+        local delta = dragInput.Position - dragStart
+        Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- Título pequeño
+local Title = Instance.new("TextLabel")
+Title.Text = "Lin Scripts MVS"
+Title.Size = UDim2.new(1, 0, 0, 45)
+Title.BackgroundColor3 = Color3.fromRGB(200, 0, 80)
+Title.TextColor3 = Color3.new(1,1,1)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+Title.Parent = Frame
+
+-- Cerrar
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Text = "✕"
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -35, 0, 8)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 0, 0)
+CloseBtn.TextColor3 = Color3.new(1,1,1)
+CloseBtn.TextSize = 20
+CloseBtn.Parent = Frame
+CloseBtn.MouseButton1Click:Connect(function() Frame.Visible = false end)
+
+-- Reabrir
+LocalPlayer.Chatted:Connect(function(msg)
+    if msg:lower() == "lin" then Frame.Visible = true end
+end)
+
+-- Botones compactos
+local y = 55
+local function addBtn(text, color, callback)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0.9, 0, 0, 38)
+    btn.Position = UDim2.new(0.05, 0, 0, y)
+    btn.BackgroundColor3 = color or Color3.fromRGB(40, 40, 50)
+    btn.Text = text
+    btn.TextColor3 = Color3.new(1,1,1)
+    btn.Font = Enum.Font.Gotham
+    btn.TextSize = 15
+    btn.Parent = Frame
+    btn.MouseButton1Click:Connect(callback)
+    y = y + 45
+    return btn
+end
+
+-- Botones principales
+addBtn("🔓 UNLOCK ALL", Color3.fromRGB(0, 170, 255), function()
+    spawn(function()
+        local data = LocalPlayer:FindFirstChild("PlayerData") or LocalPlayer:WaitForChild("PlayerData", 3)
+        if data then
+            for _, v in pairs(data:GetDescendants()) do
+                if v:IsA("BoolValue") then v.Value = true end
+                if v:IsA("IntValue") then v.Value = 999999 end
+            end
+        end
+    end)
+end)
+
+addBtn("Kill Aura: OFF", Color3.fromRGB(200, 0, 0), function(btn)
+    KillAura = not KillAura
+    btn.Text = "Kill Aura: " .. (KillAura and "ON" or "OFF")
+end)
+
+addBtn("Auto Shoot: ON", Color3.fromRGB(0, 200, 0), function(btn)
+    AutoShoot = not AutoShoot
+    btn.Text = "Auto Shoot: " .. (AutoShoot and "ON" or "OFF")
+end)
+
+addBtn("Silent Aim: ON", Color3.fromRGB(0, 200, 0), function(btn)
+    SilentAim = not SilentAim
+    btn.Text = "Silent Aim: " .. (SilentAim and "ON" or "OFF")
+end)
+
+addBtn("Antiban: ON", Color3.fromRGB(255, 165, 0), function(btn)
+    Antiban = not Antiban
+    btn.Text = "Antiban: " .. (Antiban and "ON" or "OFF")
+end)
+
+addBtn("Speed +", nil, function()
+    WalkSpeed = WalkSpeed + 8
+    local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+    if hum then hum.WalkSpeed = WalkSpeed end
+end)
+
+addBtn("Speed -", nil, function()
+    WalkSpeed = math.max(16, WalkSpeed - 8)
+    local hum = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
+    if hum then hum.WalkSpeed = WalkSpeed end
+end)
+
+-- Cargar hubs
+spawn(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Rysted/scripts/main/MurderersVSSheriffs.lua"))()
+end)
+
+StarterGui:SetCore("SendNotification", {Title="Lin Scripts", Text="GUI Pequeña cargada!\nEscribe 'lin' para abrir", Duration=6})
+print("GUI pequeña lista!")
