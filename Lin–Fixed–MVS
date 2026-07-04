@@ -1,0 +1,173 @@
+if game.CoreGui:FindFirstChild("LinScripts_MVS") then game.CoreGui.LinScripts_MVS:Destroy() end
+
+local SG = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local Titulo = Instance.new("TextLabel")
+local TabBar = Instance.new("Frame")
+local TabList = Instance.new("UIListLayout")
+local Content = Instance.new("ScrollingFrame")
+local Grid = Instance.new("UIGridLayout")
+
+SG.Name = "LinScripts_MVS"
+SG.Parent = game.CoreGui
+
+-- Ventana principal compacta y cuadrada (160x250 píxeles)
+Main.Parent = SG
+Main.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
+Main.BorderSizePixel = 1
+Main.BorderColor3 = Color3.fromRGB(180, 0, 0) -- Borde rojo asesino
+Main.Position = UDim2.new(0.02, 0, 0.3, 0)
+Main.Size = UDim2.new(0, 160, 0, 250)
+Main.Active = true
+Main.Draggable = true
+
+-- Título con el nombre del script solicitado
+Titulo.Name = "Titulo"
+Titulo.Parent = Main
+Titulo.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Titulo.Size = UDim2.new(1, 0, 0, 20)
+Titulo.Text = "  LIN SCRIPTS 🚀"
+Titulo.TextColor3 = Color3.fromRGB(255, 255, 255)
+Titulo.TextSize = 11
+Titulo.Font = Enum.Font.SourceSansBold
+Titulo.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Barra con las 7 secciones (P1 a P7) justo debajo del título
+TabBar.Parent = Main
+TabBar.BackgroundColor3 = Color3.fromRGB(28, 28, 28)
+TabBar.BorderSizePixel = 0
+TabBar.Position = UDim2.new(0, 0, 0, 20)
+TabBar.Size = UDim2.new(1, 0, 0, 18)
+
+TabList.Parent = TabBar
+TabList.FillDirection = Enum.FillDirection.Horizontal
+TabList.SortOrder = Enum.SortOrder.LayoutOrder
+
+-- Contenedor de botones con scroll vertical fino
+Content.Parent = Main
+Content.BackgroundTransparency = 1
+Content.Position = UDim2.new(0, 4, 0, 42)
+Content.Size = UDim2.new(1, -8, 1, -46)
+Content.CanvasSize = UDim2.new(0, 0, 0, 420)
+Content.ScrollBarThickness = 2
+
+Grid.Parent = Content
+Grid.CellSize = UDim2.new(1, 0, 0, 22)
+Grid.CellPadding = UDim2.new(0, 0, 0, 3)
+
+local Secciones = {}
+local PestanaActiva = "S1"
+
+local function ActualizarMenu()
+    for _, child in pairs(Content:GetChildren()) do
+        if child:IsA("TextButton") then child.Visible = false end
+    end
+    for _, btn in pairs(Secciones[PestanaActiva] or {}) do
+        btn.Visible = true
+    end
+end
+
+-- Creación de los 7 botones de sección
+for i = 1, 7 do
+    local id = "S" .. i
+    Secciones[id] = {}
+    
+    local TBtn = Instance.new("TextButton")
+    TBtn.Parent = TabBar
+    TBtn.BackgroundColor3 = i == 1 and Color3.fromRGB(150, 0, 0) or Color3.fromRGB(40, 40, 40)
+    TBtn.BorderSizePixel = 0
+    TBtn.Size = UDim2.new(1/7, 0, 1, 0)
+    TBtn.Text = "P" .. i
+    TBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TBtn.TextSize = 9
+    TBtn.Font = Enum.Font.SourceSansBold
+    
+    TBtn.MouseButton1Click:Connect(function()
+        PestanaActiva = id
+        for _, b in pairs(TabBar:GetChildren()) do
+            if b:IsA("TextButton") then b.BackgroundColor3 = Color3.fromRGB(40, 40, 40) end
+        end
+        TBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
+        ActualizarMenu()
+    end)
+end
+
+-- Funciones específicas de Murder VS Sheriff para la Pestaña 1
+local funcionesMVS = {
+    ["S1_1"] = function() -- ESP ROLES REAL
+        for _, v in pairs(game.Players:GetPlayers()) do
+            if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                if v.Character.HumanoidRootPart:FindFirstChild("RoleESP") then v.Character.HumanoidRootPart.RoleESP:Destroy() end
+                local b = Instance.new("BoxHandleAdornment") b.Name = "RoleESP" b.Size = Vector3.new(3.5, 5.5, 3.5)
+                b.AlwaysOnTop = true b.Adornee = v.Character.HumanoidRootPart b.Transparency = 0.5 b.Parent = v.Character.HumanoidRootPart
+                if v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then b.Color3 = Color3.fromRGB(255,0,0)
+                elseif v.Backpack:FindFirstChild("Gun") or v.Character:FindFirstChild("Gun") then b.Color3 = Color3.fromRGB(0,0,255)
+                else b.Color3 = Color3.fromRGB(0,255,0) end
+            end
+        end
+    end,
+    ["S1_2"] = function() -- TELEPORT PISTOLA TIRA
+        local c = game.Players.LocalPlayer.Character
+        if c and c:FindFirstChild("HumanoidRootPart") then
+            for _, o in pairs(game.Workspace:GetChildren()) do
+                if o:IsA("Tool") or o.Name:find("Gun") or o.Name:find("Drop") then c.HumanoidRootPart.CFrame = o.CFrame break end
+            end
+        end
+    end,
+    ["S1_3"] = function() -- MULTIPLICADOR VELOCIDAD
+        local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+        if h then h.WalkSpeed = h.WalkSpeed == 16 and 45 or 16 end
+    end
+}
+
+-- Generar los 105 botones en total (15 por cada una de las 7 secciones)
+for secNum = 1, 7 do
+    local secId = "S" .. secNum
+    for botNum = 1, 15 do
+        local globalId = secId .. "_" .. botNum
+        local nombreBot = "Macro Opción " .. botNum
+        local colorBot = Color3.fromRGB(35, 35, 35)
+        
+        -- Renombrar los botones principales de MVS en la Pestaña 1
+        if secNum == 1 then
+            if botNum == 1 then nombreBot = "👁️ ESP Roles" colorBot = Color3.fromRGB(60, 30, 30)
+            elseif botNum == 2 then nombreBot = "🔫 Tp Pistola" colorBot = Color3.fromRGB(30, 45, 75)
+            elseif botNum == 3 then nombreBot = "⚡ Vel x45" colorBot = Color3.fromRGB(30, 60, 45)
+            end
+        end
+        
+        local B = Instance.new("TextButton")
+        B.Parent = Content
+        B.BackgroundColor3 = colorBot
+        B.BorderSizePixel = 0
+        B.Text = nombreBot
+        B.TextColor3 = Color3.fromRGB(230, 230, 230)
+        B.TextSize = 10
+        B.Font = Enum.Font.SourceSansBold
+        B.Visible = (secNum == 1)
+        
+        B.MouseButton1Click:Connect(function()
+            if funcionesMVS[globalId] then
+                funcionesMVS[globalId]()
+            else
+                print("Lin Scripts - Botón activado: " .. globalId)
+            end
+        end)
+        
+        table.insert(Secciones[secId], B)
+    end
+end
+
+-- Botón para cerrar por completo Lin Scripts en la sección 7
+local Cerrar = Instance.new("TextButton")
+Cerrar.Parent = Content
+Cerrar.BackgroundColor3 = Color3.fromRGB(70, 20, 20)
+Cerrar.BorderSizePixel = 0
+Cerrar.Text = "❌ CERRAR LIN"
+Cerrar.TextColor3 = Color3.fromRGB(255, 255, 255)
+Cerrar.TextSize = 10
+Cerrar.Font = Enum.Font.SourceSansBold
+Cerrar.MouseButton1Click:Connect(function() SG:Destroy() end)
+table.insert(Secciones["S7"], Cerrar)
+
+ActualizarMenu()
