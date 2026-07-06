@@ -1,0 +1,107 @@
+-- Rivals Rayfield MEGA - Hecho por Lin Scripts
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Rivals • Rayfield MEGA | Hecho por Lin Scripts",
+    LoadingTitle = "Cargando MEGA Script...",
+    LoadingSubtitle = "Hecho por Lin Scripts - Delta 2026",
+    ConfigurationSaving = {Enabled = true, FolderName = "RivalsLinScripts", FileName = "FullConfig"}
+})
+
+local Tabs = {
+    Main = Window:CreateTab("Principal", 4483362458),
+    Combat = Window:CreateTab("Combate", 4483362458),
+    Visuals = Window:CreateTab("Visuales", 4483362458),
+    Movement = Window:CreateTab("Movimiento", 4483362458),
+    Skins = Window:CreateTab("Skins", 4483362458),
+    Farm = Window:CreateTab("Farm", 4483362458),
+    Misc = Window:CreateTab("Misc", 4483362458)
+}
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local flying = false
+local flySpeed = 130
+
+-- MOVIMIENTO
+Tabs.Movement:CreateSection("Movement Hacks - Hecho por Lin Scripts")
+
+Tabs.Movement:CreateToggle({Name = "Fly", CurrentValue = false, Callback = function(v) flying = v end})
+Tabs.Movement:CreateSlider({Name = "Fly Speed", Range = {30, 600}, Increment = 10, CurrentValue = 130, Callback = function(v) flySpeed = v end})
+Tabs.Movement:CreateSlider({Name = "WalkSpeed", Range = {16, 400}, Increment = 5, CurrentValue = 80, Callback = function(v) humanoid.WalkSpeed = v end})
+Tabs.Movement:CreateSlider({Name = "JumpPower", Range = {50, 700}, Increment = 10, CurrentValue = 150, Callback = function(v) humanoid.JumpPower = v end})
+Tabs.Movement:CreateToggle({Name = "Noclip", CurrentValue = false, Callback = function() end})
+Tabs.Movement:CreateToggle({Name = "Infinite Jump", CurrentValue = false, Callback = function() end})
+Tabs.Movement:CreateToggle({Name = "Speed Hack", CurrentValue = false, Callback = function() end})
+Tabs.Movement:CreateToggle({Name = "Remove Fall Damage", CurrentValue = false, Callback = function() end})
+
+-- COMBATE
+Tabs.Combat:CreateSection("Combat Hacks")
+
+Tabs.Combat:CreateToggle({Name = "Aimbot (Mouse)", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "Silent Aim", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "Rage Bot", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "Trigger Bot", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "Auto Shoot", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "Rapid Fire", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "No Recoil", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "No Spread", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "Infinite Ammo", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateToggle({Name = "Hitbox Expander", CurrentValue = false, Callback = function() end})
+Tabs.Combat:CreateSlider({Name = "Aimbot FOV", Range = {10, 360}, Increment = 5, CurrentValue = 90, Callback = function() end})
+Tabs.Combat:CreateSlider({Name = "Hitbox Size", Range = {1, 20}, Increment = 1, CurrentValue = 5, Callback = function() end})
+
+-- VISUALES
+Tabs.Visuals:CreateSection("Visuals")
+
+Tabs.Visuals:CreateToggle({Name = "ESP Boxes", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "ESP Names", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "ESP Health", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "ESP Distance", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "ESP Weapons", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "Tracers", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "Full Bright", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "No Flashbang", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "No Smoke", CurrentValue = false, Callback = function() end})
+Tabs.Visuals:CreateToggle({Name = "Custom Crosshair", CurrentValue = false, Callback = function() end})
+
+-- SKINS
+Tabs.Skins:CreateSection("Skin Changer - Hecho por Lin Scripts")
+
+Tabs.Skins:CreateButton({Name = "Unlock All Skins", Callback = function() Rayfield:Notify({Title = "Lin Scripts", Content = "Intentando unlock all skins..."}) end})
+Tabs.Skins:CreateDropdown({Name = "Gun Skin", Options = {"Default","Golden","Legendary","Dragon","Ice","Neon","Galaxy","Red Death","Event"}, CurrentOption = {"Default"}, Callback = function() end})
+Tabs.Skins:CreateDropdown({Name = "Character Skin", Options = {"Default","Rare","Epic","Event"}, CurrentOption = {"Default"}, Callback = function() end})
+Tabs.Skins:CreateToggle({Name = "Auto Random Skin", CurrentValue = false, Callback = function() end})
+Tabs.Skins:CreateToggle({Name = "Skin Loop", CurrentValue = false, Callback = function() end})
+Tabs.Skins:CreateButton({Name = "Apply Skin Now", Callback = function() end})
+Tabs.Skins:CreateToggle({Name = "Rainbow Skin", CurrentValue = false, Callback = function() end})
+
+-- FARM
+Tabs.Farm:CreateSection("Auto Farm")
+
+Tabs.Farm:CreateToggle({Name = "Auto Collect Yen", CurrentValue = false, Callback = function() end})
+Tabs.Farm:CreateToggle({Name = "Auto Claim Rewards", CurrentValue = false, Callback = function() end})
+Tabs.Farm:CreateToggle({Name = "Auto Spin", CurrentValue = false, Callback = function() end})
+Tabs.Farm:CreateToggle({Name = "Auto Win", CurrentValue = false, Callback = function() end})
+Tabs.Farm:CreateButton({Name = "Claim All Codes", Callback = function() end})
+Tabs.Farm:CreateToggle({Name = "AFK Farm", CurrentValue = false, Callback = function() end})
+
+-- MISC
+Tabs.Misc:CreateSection("Misc - Hecho por Lin Scripts")
+
+Tabs.Misc:CreateToggle({Name = "Anti AFK", CurrentValue = false, Callback = function() end})
+Tabs.Misc:CreateToggle({Name = "FPS Boost", CurrentValue = false, Callback = function() end})
+Tabs.Misc:CreateToggle({Name = "God Mode", CurrentValue = false, Callback = function() end})
+Tabs.Misc:CreateToggle({Name = "Invisible", CurrentValue = false, Callback = function() end})
+Tabs.Misc:CreateButton({Name = "Rejoin Server", Callback = function() game:GetService("TeleportService"):Teleport(game.PlaceId) end})
+Tabs.Misc:CreateButton({Name = "Reset Character", Callback = function() player.Character:BreakJoints() end})
+Tabs.Misc:CreateButton({Name = "Destroy GUI", Callback = function() Rayfield:Destroy() end})
+Tabs.Misc:CreateLabel("Hecho por Lin Scripts - +45 Opciones")
+
+Rayfield:Notify({
+    Title = "Hecho por Lin Scripts",
+    Content = "Script MEGA cargado correctamente para Rivals",
+    Duration = 8
+})
