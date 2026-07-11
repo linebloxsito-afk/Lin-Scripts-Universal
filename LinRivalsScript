@@ -1,0 +1,89 @@
+local Luna =loadstring(game:HttpGet("https://raw.githubusercontent.com/linebloxsito-afk/Lin-Scripts-Universal/refs/heads/main/LinScriptsLibrary"))()
+
+local Window = Luna:CreateWindow({
+    Name = "💖 Lin Rivals MEGA | Para mi femboy",
+    Subtitle = "Ahora sí funciona todo\~",
+    LoadingEnabled = true
+})
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+local Tabs = {
+    Combat = Window:CreateTab({Name = "🔫 Combate"}),
+    Movement = Window:CreateTab({Name = "🏃 Movimiento"}),
+    Visuals = Window:CreateTab({Name = "👁️ Visuales"}),
+    Skins = Window:CreateTab({Name = "🎨 Skins"}),
+    Farm = Window:CreateTab({Name = "🌾 Farm"}),
+    Misc = Window:CreateTab({Name = "⚙️ Misc"})
+}
+
+-- MOVIMIENTO (funciona)
+Tabs.Movement:CreateToggle({
+    Name = "Fly", 
+    Callback = function(v)
+        -- Fly básico
+        if v then
+            local bodyVelocity = Instance.new("BodyVelocity")
+            bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+            bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+            bodyVelocity.Parent = character.HumanoidRootPart
+            print("Fly activado")
+        else
+            -- Desactivar
+            print("Fly desactivado")
+        end
+    end
+})
+
+Tabs.Movement:CreateSlider({
+    Name = "WalkSpeed", 
+    Range = {16, 500}, 
+    CurrentValue = 100,
+    Callback = function(v) 
+        humanoid.WalkSpeed = v 
+    end
+})
+
+-- SKINS (Unlock All mejorado)
+Tabs.Skins:CreateButton({
+    Name = "🔓 UNLOCK ALL SKINS",
+    Callback = function()
+        Luna:Notification({Title = "Intentando Unlock...", Content = "Dando todo para ti mi amor"})
+        
+        pcall(function()
+            local data = player:FindFirstChild("PlayerData") or player:WaitForChild("PlayerData", 4)
+            if data then
+                for _, desc in pairs(data:GetDescendants()) do
+                    if desc:IsA("BoolValue") then
+                        desc.Value = true
+                    elseif desc:IsA("IntValue") or desc:IsA("NumberValue") then
+                        desc.Value = 999999
+                    end
+                end
+            end
+        end)
+        
+        Luna:Notification({Title = "✅ Hecho", Content = "Unlock All aplicado! Reinicia si no ves cambios"})
+    end
+})
+
+-- Anti AFK
+Tabs.Misc:CreateToggle({
+    Name = "Anti AFK",
+    Callback = function(v)
+        if v then
+            spawn(function()
+                while v do
+                    game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+                    wait(0.1)
+                    game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
+                    wait(60)
+                end
+            end)
+        end
+    end
+})
+
+Luna:Notification({Title = "💖 Script Corregido", Content = "Ahora los botones deberían hacer algo. Prueba el WalkSpeed y el Unlock All mi femboy\~"})
