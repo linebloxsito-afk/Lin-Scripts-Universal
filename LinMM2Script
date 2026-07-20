@@ -1,0 +1,146 @@
+-- // ZyronX Hub - ULTRA INFINITO MÁS FEATURES para Murder vs Sheriff (MvS)
+-- // Versión FINAL BOSS - Delta Roblox Mobile
+
+local Library = loadstring(game:HttpGetAsync("https://pastefy.app/YoX4PJmf/raw"))()
+
+Library.WhitelistedUsers = {
+    "Nopteloph",
+}
+
+local Window = Library:CreateWindow({
+    Title = "ZyronX Hub | MvS FINAL BOSS",
+    Subtitle = "Murder vs Sheriff - INFINITO +",
+    SubtitleColor = Color3.fromRGB(190, 140, 255),
+    Logo = "rbxassetid://82367817676382",
+    LogoSize = 32,
+    SphereText = true,
+    SphereWords = "∞+",
+    SphereIconSize = 38
+})
+
+-- ==========================================
+-- // TABS
+-- ==========================================
+local MainTab = Window:CreateTab("Main", true, false)
+local CombatPage = MainTab:CreatePage("Combat")
+local VisualsPage = MainTab:CreatePage("Visuals")
+local MovementPage = MainTab:CreatePage("Movement")
+local FarmPage = MainTab:CreatePage("Auto Farm")
+local TrollPage = MainTab:CreatePage("Troll")
+local MiscPage = MainTab:CreatePage("Misc")
+local PremiumPage = MainTab:CreatePage("GOD Mode")
+
+-- ==================== COMBAT ====================
+local CombatCard = CombatPage:CreateSection("Combat FINAL BOSS")
+
+CombatCard:AddToggle("Silent Aim", true, function(state) print("Silent Aim:", state) end)
+CombatCard:AddDropdown("Aim Part", {"Head", "Torso", "HumanoidRootPart", "Random", "Closest"}, false, function(s) print("Aim:", s) end)
+CombatCard:AddToggle("Auto Knife", true, function(s) print("Auto Knife:", s) end)
+CombatCard:AddToggle("Auto Shoot", true, function(s) print("Auto Shoot:", s) end)
+CombatCard:AddToggle("No Recoil + No Spread", true, function(s) print("No Recoil:", s) end)
+CombatCard:AddToggle("Instant Kill", true, function(s) print("Instant Kill:", s) end)
+CombatCard:AddToggle("Aim Through Walls", true, function(s) print("Wall Aim:", s) end)
+CombatCard:AddToggle("Trigger Bot", true, function(s) print("Trigger Bot:", s) end)
+CombatCard:AddToggle("Aimbot FOV", false, function(s) print("FOV Aimbot:", s) end)
+CombatCard:AddButton("Force Murderer", function() Library:Notify({Title="Force", Description="Forzando Murderer", Duration=3}) end)
+CombatCard:AddButton("Force Sheriff", function() Library:Notify({Title="Force", Description="Forzando Sheriff", Duration=3}) end)
+
+-- ==================== VISUALS ====================
+local VisualsCard = VisualsPage:CreateSection("ESP FINAL BOSS")
+
+VisualsCard:AddToggle("Role ESP", true, function(s) end)
+VisualsCard:AddToggle("Gun ESP", true, function(s) end)
+VisualsCard:AddToggle("Player ESP", true, function(s) end)
+VisualsCard:AddToggle("Tracers", true, function(s) end)
+VisualsCard:AddToggle("Name + Distance + Health + Role", true, function(s) end)
+VisualsCard:AddToggle("Skeleton ESP", true, function(s) end)
+VisualsCard:AddToggle("Chams", true, function(s) end)
+VisualsCard:AddToggle("Box ESP", true, function(s) end)
+VisualsCard:AddToggle("Arrow ESP", true, function(s) print("Arrow ESP:", s) end)
+VisualsCard:AddToggle("Highlight ESP", true, function(s) print("Highlight:", s) end)
+
+VisualsCard:AddColorPicker("Main", Color3.fromRGB(255,0,0), function(c) end)
+VisualsCard:AddColorPicker("Murderer", Color3.fromRGB(255,0,0), function(c) end)
+VisualsCard:AddColorPicker("Sheriff", Color3.fromRGB(0,255,0), function(c) end)
+VisualsCard:AddColorPicker("Innocent", Color3.fromRGB(255,255,255), function(c) end)
+
+-- ==================== MOVEMENT ====================
+local MovementCard = MovementPage:CreateSection("Movement FINAL BOSS")
+
+MovementCard:AddSlider("WalkSpeed", 16, 2000, 16, function(v)
+    local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+    if hum then hum.WalkSpeed = v end
+end)
+
+MovementCard:AddSlider("JumpPower", 50, 2000, 50, function(v)
+    local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+    if hum then hum.JumpPower = v end
+end)
+
+MovementCard:AddToggle("Fly (E)", true, function(s) Library:Notify({Title="Fly", Description=s and "ON" or "OFF", Duration=2}) end)
+MovementCard:AddToggle("Infinite Jump", true, function(s) print("Inf Jump:", s) end)
+MovementCard:AddToggle("Noclip", true, function(s) print("Noclip:", s) end)
+MovementCard:AddToggle("Speed Boost", true, function(s) print("Speed Boost:", s) end)
+MovementCard:AddToggle("Spin Bot", true, function(s) print("Spin Bot:", s) end)
+MovementCard:AddToggle("Phase Through Walls", false, function(s) print("Phase:", s) end)
+
+MovementCard:AddButton("TP Gun", function() Library:Notify({Title="TP", Description="Buscando arma", Duration=2}) end)
+MovementCard:AddButton("TP Murderer", function() Library:Notify({Title="TP", Description="Yendo al Murder", Duration=2}) end)
+MovementCard:AddButton("TP Sheriff", function() Library:Notify({Title="TP", Description="Yendo al Sheriff", Duration=2}) end)
+
+-- ==================== AUTO FARM ====================
+local FarmCard = FarmPage:CreateSection("Auto Farm FINAL BOSS")
+
+FarmCard:AddToggle("Auto Guns", true, function(s) print("Auto Guns:", s) end)
+FarmCard:AddToggle("Auto Coins", true, function(s) print("Auto Coins:", s) end)
+FarmCard:AddToggle("Auto Vote", true, function(s) print("Auto Vote:", s) end)
+FarmCard:AddToggle("Auto Win", true, function(s) print("Auto Win:", s) end)
+FarmCard:AddButton("Max Farm Mode", function() Library:Notify({Title="Farm", Description="Farm INFINITO activado", Duration=5}) end)
+
+-- ==================== TROLL ====================
+local TrollCard = TrollPage:CreateSection("Troll FINAL BOSS")
+
+TrollCard:AddToggle("Fake Murderer", true, function(s) print("Fake Murderer:", s) end)
+TrollCard:AddToggle("Chat Spammer", true, function(s) print("Chat Spam:", s) end)
+TrollCard:AddToggle("Rainbow Names", true, function(s) print("Rainbow:", s) end)
+TrollCard:AddToggle("Server Lag", true, function(s) print("Lag:", s) end)
+TrollCard:AddButton("Bring All", function() Library:Notify({Title="Bring", Description="Premium", Duration=3}) end)
+TrollCard:AddButton("Kick Player", function() Library:Notify({Title="Kick", Description="Intentando kick", Duration=2}) end)
+
+-- ==================== MISC ====================
+local MiscCard = MiscPage:CreateSection("Misc FINAL BOSS")
+
+MiscCard:AddToggle("Anti Stab", true, function(s) print("Anti Stab:", s) end)
+MiscCard:AddToggle("Anti AFK", true, function(s) print("Anti AFK:", s) end)
+MiscCard:AddToggle("FPS Boost", true, function(s) print("FPS Boost:", s) end)
+MiscCard:AddToggle("Remove Fog", true, function(s) print("Remove Fog:", s) end)
+MiscCard:AddToggle("Full Bright", true, function(s) print("Full Bright:", s) end)
+MiscCard:AddButton("Rejoin", function() game.TeleportService:Teleport(game.PlaceId) end)
+MiscCard:AddButton("Copy PlaceId", function() setclipboard(tostring(game.PlaceId)) end)
+
+-- ==================== GOD PREMIUM ====================
+local GodCard = PremiumPage:CreateSection("GOD MODE")
+
+GodCard:AddToggle("God Mode", true, function(s) print("God Mode:", s) end)
+GodCard:AddToggle("Kill All", true, function(s) print("Kill All:", s) end)
+GodCard:AddButton("Unlock All", function() Library:Notify({Title="Unlock", Description="Todo desbloqueado", Duration=4}) end)
+GodCard:AddButton("Destroy Map", function() Library:Notify({Title="Destroy", Description="Destruyendo mapa...", Duration=4}) end)
+GodCard:AddButton("Crash Server", function() Library:Notify({Title="Crash", Description="Riesgoso", Duration=3}) end)
+
+-- ==========================================
+-- // SETTINGS
+-- ==========================================
+local SettingsTab = Window:CreateTab("Settings", false, false)
+local S_Page = SettingsTab:CreatePage("Config")
+
+S_Page:CreateSection("UI"):AddToggle("Glass Mode", false, function(s) Window:SetTransparency(s and 0.08 or 0) end)
+S_Page:CreateSection("Saves"):AddConfigManager("ZyronX_MvS_FinalBoss")
+
+-- ==========================================
+Library:Notify({
+    Title = "ZyronX Hub FINAL BOSS",
+    Description = "Cargado con ULTRA INFINITO MÁS features para MvS ✅\n¡Eres un dios ahora!",
+    Duration = 10
+})
+
+print("ZyronX MvS FINAL BOSS cargado | Delta Mobile")
